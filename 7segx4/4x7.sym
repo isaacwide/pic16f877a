@@ -1,0 +1,70 @@
+004     @WRITE_PROGRAM_MEMORY8.P1
+004-005 @READ_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1
+015     CCP_1_LOW
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+020-029 hexa
+02A     main.flag
+02B     main.millares
+02C     main.centenas
+02D     main.decenas
+02E     main.unidad
+02F     show.unidad
+030     show.decenas
+031     show.centenas
+032     show.millares
+033     @delay_ms1.P1
+033     show.@SCRATCH1
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+09C.6   C1OUT
+09C.7   C2OUT
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+0004  @delay_ms1
+004A  main
+0019  show
+004A  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\isaac\Desktop\pic16f877a\7segx4\
+
+Project Files:
+    4x7.c
+    ..\..\..\..\..\Program Files (x86)\PICC\devices\16f877a.h
+
+Units:
+    C:\Users\isaac\Desktop\pic16f877a\7segx4\4x7 (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      4x7.err
+    Ext Symbols: 4x7.esym
+    INHX8:       4x7.hex
+    Symbols:     4x7.sym
+    List:        4x7.lst
+    Debug/COFF:  4x7.cof
+    Project:     4x7.PJT
+    Call Tree:   4x7.tre
+    Statistics:  4x7.sta

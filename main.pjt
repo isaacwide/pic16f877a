@@ -1,0 +1,25 @@
+[PROJECT]
+Target=C:\Users\isaac\Desktop\pic16f877a\main.hex
+Development_Mode=
+Processor_Text=PIC16F877A
+ToolSuite=CCS
+Processor=0x877A
+[C:\Users\isaac\Desktop\pic16f877a\main]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+[mru-list]
+1=C:\Users\isaac\Desktop\pic16f877a\main.c
+[Windows]
+0=0000 %S 0 0 796 451 3 0
+[Units]
+Link=0
+Count=1
+1=C:\Users\isaac\Desktop\pic16f877a\main
+[Opened Files]
+1=main.c
+2=leds\leds.c
+3=

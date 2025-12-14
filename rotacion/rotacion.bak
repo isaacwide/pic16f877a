@@ -1,0 +1,40 @@
+#include<16f877a.h>
+#fuses xt,nowdt
+#use delay(clock=4M)
+#USE FAST_IO(C)
+#USE FAST_IO(B)
+
+
+
+void main(){
+    set_tris_b(0x00);        // Puerto b como salidas
+    set_tris_c(0b00000001);  // RC0 entrada, resto salidas
+    
+    output_b(0x00);          // Inicia apagado
+    
+    int16 rotacion = 1 ;
+    while(1){
+        if(input(PIN_C0)){ 
+            //si es uno rota a la derecha
+            if (rotacion == 0 ){
+               rotacion = 128;
+            }
+            output_b(rotacion);
+           rotacion = rotacion/2;
+            
+            
+        }
+        else {
+            //si no es uno rota a la izquierrds 
+            if (rotacion == 256 ){
+               rotacion = 1;
+            }
+            output_b(rotacion);
+           rotacion = rotacion*2;
+            
+        }
+        
+        delay_ms(200);
+    
+    }
+}

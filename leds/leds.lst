@@ -1,0 +1,133 @@
+CCS PCM C Compiler, Version 4.114, 93460303               09-dic.-25 17:07
+
+               Filename: C:\Users\isaac\Desktop\pic16f877a\leds\leds.lst
+
+               ROM used: 77 words (1%)
+                         Largest free fragment is 2048
+               RAM used: 5 (1%) at main() level
+                         6 (2%) worst case
+               Stack:    1 locations
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   019
+0003:  NOP
+.................... /* mi primer codigo en micro*/ 
+.................... #include <16f877a.h> 
+.................... //////// Standard Header file for the PIC16F877A device //////////////// 
+.................... #device PIC16F877A 
+.................... #list 
+....................  
+.................... #fuses xt,nowdt 
+.................... #use delay(clock=4M) 
+0004:  MOVLW  21
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  RETURN
+....................  
+.................... #byte TRISC=0x87 
+.................... #byte PORTC=0x07 
+....................  
+.................... void main() 
+.................... { 
+0019:  CLRF   04
+001A:  BCF    03.7
+001B:  MOVLW  1F
+001C:  ANDWF  03,F
+001D:  BSF    03.5
+001E:  BSF    1F.0
+001F:  BSF    1F.1
+0020:  BSF    1F.2
+0021:  BCF    1F.3
+0022:  MOVLW  07
+0023:  MOVWF  1C
+....................   TRISC=0x00; 
+0024:  CLRF   07
+....................   PORTC=0x00; 
+0025:  BCF    03.5
+0026:  CLRF   07
+....................    
+....................   while(1){ 
+....................    
+....................     PORTC=0b00000001; 
+0027:  MOVLW  01
+0028:  MOVWF  07
+....................     delay_ms(100); 
+0029:  MOVLW  64
+002A:  MOVWF  21
+002B:  CALL   004
+....................     PORTC=0b00000000; 
+002C:  CLRF   07
+....................     delay_ms(100); 
+002D:  MOVLW  64
+002E:  MOVWF  21
+002F:  CALL   004
+....................      
+....................      
+....................     PORTC=0b00000010; 
+0030:  MOVLW  02
+0031:  MOVWF  07
+....................     delay_ms(100); 
+0032:  MOVLW  64
+0033:  MOVWF  21
+0034:  CALL   004
+....................     PORTC=0b00000000; 
+0035:  CLRF   07
+....................     delay_ms(100); 
+0036:  MOVLW  64
+0037:  MOVWF  21
+0038:  CALL   004
+....................      
+....................      
+....................     PORTC=0b00000011; 
+0039:  MOVLW  03
+003A:  MOVWF  07
+....................     delay_ms(100); 
+003B:  MOVLW  64
+003C:  MOVWF  21
+003D:  CALL   004
+....................     PORTC=0b00000000; 
+003E:  CLRF   07
+....................     delay_ms(100); 
+003F:  MOVLW  64
+0040:  MOVWF  21
+0041:  CALL   004
+....................      
+....................     PORTC=0b00000011; 
+0042:  MOVLW  03
+0043:  MOVWF  07
+....................     delay_ms(100); 
+0044:  MOVLW  64
+0045:  MOVWF  21
+0046:  CALL   004
+....................     PORTC=0b00000000; 
+0047:  CLRF   07
+....................     delay_ms(100); 
+0048:  MOVLW  64
+0049:  MOVWF  21
+004A:  CALL   004
+....................   } 
+004B:  GOTO   027
+.................... } 
+004C:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F71   XT NOWDT PUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

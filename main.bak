@@ -1,0 +1,56 @@
+/* mi primer codigo en micro*/
+#include <16f877a.h> // direccion del pic 
+#fuses xt,nowdt  //mandamos a la mirda al perro guardian y usamos el ocilador
+#use delay(clock=4M)//usamos el osolador de 4m
+
+
+// estas seran las salidas 
+#byte TRISB=0x86
+#byte PORTB=0x06
+
+//ahora usaremos bit un bit del puerto c en este casi el rc 
+
+#bit TRISC_RC2 = 0x87.2
+#bit PORTC_RC2 = 0x07.2
+
+
+int contador =0 ;
+void main()
+{
+  TRISB=0x00;  // configurtamos todo b como salidas 
+  PORTB=0x00; // iniciamos en low 
+  
+  // configuramos entrada en este caso con 1 
+   TRISC_RC2 = 1;
+  while(1){
+  
+  if(PORTC_RC2 == 1){ // port tiene ek estado del bit 
+     contador = contador +1 ;
+  }
+  
+  
+  if(contador == 1){
+     
+     PORTB = 0b00001111;
+     delay_ms(500);
+     PORTB = 0b00000000;
+  
+  }else if (contador == 2){
+      
+     PORTB = 0b00001100;
+     delay_ms(500);
+     PORTB = 0b00000011;
+     delay_ms(500);
+     PORTB = 0b00001111;
+  
+  }else {
+    PORTB = 0b00000000;
+    contador = 0 ;
+  
+  }
+  
+  
+
+ 
+  }
+}

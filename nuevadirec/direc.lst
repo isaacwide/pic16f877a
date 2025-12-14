@@ -1,0 +1,71 @@
+CCS PCM C Compiler, Version 4.114, 93460303               12-dic.-25 12:24
+
+               Filename: C:\Users\isaac\Desktop\pic16f877a\nuevadirec\direc.lst
+
+               ROM used: 29 words (0%)
+                         Largest free fragment is 2048
+               RAM used: 5 (1%) at main() level
+                         5 (1%) worst case
+               Stack:    0 locations
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   004
+0003:  NOP
+.................... #include<16f877a.h> 
+.................... //////// Standard Header file for the PIC16F877A device //////////////// 
+.................... #device PIC16F877A 
+.................... #list 
+....................  
+.................... #fuses xt,nowdt 
+.................... #use delay(clock=4M) 
+.................... #USE FAST_IO(C) 
+.................... #USE FAST_IO(D) 
+....................  
+.................... void main(){ 
+0004:  CLRF   04
+0005:  BCF    03.7
+0006:  MOVLW  1F
+0007:  ANDWF  03,F
+0008:  BSF    03.5
+0009:  BSF    1F.0
+000A:  BSF    1F.1
+000B:  BSF    1F.2
+000C:  BCF    1F.3
+000D:  MOVLW  07
+000E:  MOVWF  1C
+....................     set_tris_d(0x00);        // Puerto D como salidas 
+000F:  MOVLW  00
+0010:  MOVWF  08
+....................     set_tris_c(0b00000001);  // RC0 entrada, resto salidas 
+0011:  MOVLW  01
+0012:  MOVWF  07
+....................      
+....................     output_d(0x00);          // Inicia apagado 
+0013:  BCF    03.5
+0014:  CLRF   08
+....................      
+....................     while(1){ 
+....................         if(input(PIN_C0)){ 
+0015:  BTFSS  07.0
+0016:  GOTO   01A
+....................             //output_high(PIN_D0); ? Enciende LED en RD0 
+....................             output_d(0b11110000);// enciende todos loa leds  
+0017:  MOVLW  F0
+0018:  MOVWF  08
+....................         } 
+....................         else { 
+0019:  GOTO   01B
+....................             //output_low(PIN_D0); // Apaga LED cuando suelta 
+....................             output_d(0x00);// apaga todo los leds 
+001A:  CLRF   08
+....................              
+....................         } 
+....................     } 
+001B:  GOTO   015
+.................... } 
+001C:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F71   XT NOWDT PUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

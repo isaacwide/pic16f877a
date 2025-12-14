@@ -1,0 +1,24 @@
+#include<16f877a.h>
+#fuses xt,nowdt
+#use delay(clock=4M)
+#USE FAST_IO(C)
+#USE FAST_IO(D)
+
+void main(){
+    set_tris_d(0x00);        // Puerto D como salidas
+    set_tris_c(0b00000001);  // RC0 entrada, resto salidas
+    
+    output_d(0x00);          // Inicia apagado
+    
+    while(1){
+        if(input(PIN_C0)){
+            //output_high(PIN_D0); ? Enciende LED en RD0
+            output_d(0xFF);// enciende todos loa leds 
+        }
+        else {
+            //output_low(PIN_D0); // Apaga LED cuando suelta
+            output_d(0x00);// apaga todo los leds
+            
+        }
+    }
+}
