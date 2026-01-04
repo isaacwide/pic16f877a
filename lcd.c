@@ -1,0 +1,62 @@
+/* mi primer codigo en micro*/
+#include <16f877a.h>
+#fuses XT,NOWDT
+#use delay(clock=4000000)
+#USE FAST_IO(D)
+
+// Configuración de pines LCD
+#define lcd_rs_pin  pin_b1
+#define lcd_rw_pin  pin_b2
+#define lcd_enable_pin  pin_b0
+#define lcd_data4 pin_b4
+#define lcd_data5 pin_b5
+#define lcd_data6 pin_b6
+#define lcd_data7 pin_b7
+
+#include <lcd.c>
+
+void main()
+{
+   set_tris_d(0b00001100); // RD2 y RD3 como entradas
+   output_d(0x00);
+   lcd_init();
+   delay_ms(100);// esperamos 100 segundos para limpar todo 
+   
+   while(1){
+      
+      // PRIMERO evaluar AMBOS botones
+      if ((input(PIN_D3)) && (input(PIN_D2))){
+           
+            delay_ms(100);
+            lcd_putc("\f"); // limpiamoz pantalla 
+            lcd_gotoxy(1,1);// colocamos el cursor 
+            printf(lcd_putc,"3.-Ambos");// imprimirmos 
+            output_d(0b00000011);// prendemos 
+      
+      }
+      
+      else if (input(PIN_D3)){
+      
+            delay_ms(100);
+            lcd_putc("\f"); 
+            lcd_gotoxy(1,1);
+            printf(lcd_putc,"1.-Primero");
+            output_d(0b00000001);
+      
+      }
+      else if (input(PIN_D2)){
+      
+            delay_ms(100);
+            lcd_putc("\f"); 
+            lcd_gotoxy(1,1);
+            printf(lcd_putc,"2.-Segundo");
+            output_d(0b00000010);
+      
+      }
+      else{
+            lcd_putc("\f");
+            output_d(0b00000000);
+      }
+     
+   }
+}

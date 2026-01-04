@@ -1,0 +1,82 @@
+/*aca  haremos la practica del fantasma*/
+#include <16f877a.h>
+#fuses XT,NOWDT
+#use delay(clock=4M)
+#use fast_io(B)
+#define lcd_rs_pin     pin_d0
+#define lcd_rw_pin     pin_d1
+#define lcd_enable_pin pin_d2
+#define lcd_data4      pin_d4
+#define lcd_data5      pin_d5
+#define lcd_data6      pin_d6
+#define lcd_data7      pin_d7
+#include <lcd.c>
+
+// Función para crear caracteres personalizados en CGRAM
+void lcd_set_cgram_char(int8 pos, int8 *patron) {
+    int8 i;
+    lcd_send_byte(0, 0x40 + (pos * 8)); // Comando para posicionar en CGRAM
+    for(i = 0; i < 8; i++) {
+        lcd_send_byte(1, patron[i]); // Enviar cada línea del patrón
+    }
+    lcd_send_byte(0, 0x80); // Regresar a DDRAM
+}
+
+void main(){
+    set_tris_b(0b10000000); // B7 como entrada
+    lcd_init();
+    boolean anterior = false;
+    int pos = 1;
+    int fila = 1; 
+    
+    int8 Fantasma[8] = {
+        0b00001110, // ....111.
+        0b00011111, // ...11111
+        0b00010101, // ...1.1.1
+        0b00011111, // ...11111
+        0b00011111, // ...11111
+        0b00011111, // ...11111
+        0b00010101, // ...1.1.1
+        0b00000000  // ........
+    };
+    
+    lcd_set_cgram_char(0, Fantasma); // Guardamos nuestro caracter en CGRAM
+    lcd_putc('\f');                  // Limpiar pantalla
+    delay_ms(2);
+    lcd_gotoxy(1, 1);                // Volvemos a la posicion inicial
+    lcd_putc(0);                     // Colocamos nuestro caracter
+    
+    while(true) {
+        if(input(PIN_B7) && !anterior) {
+            while(input(PIN_B7));    // Esperar que suelte el botón
+            delay_ms(50);            // Anti-rebote
+            
+            // Borrar posición actual
+            lcd_gotoxy(pos, fila);
+            lcd_putc(' ');
+            
+            // Mover a siguiente posición
+            pos++;
+            
+            // Lógica de cambio de fila
+            if(pos > 16) {
+                pos = 1;              // Reiniciar columna
+                if(fila == 1) {
+                    fila = 2;         // Pasar a fila 2
+                } else {
+                    fila = 1;         // Regresar a fila 1
+                }
+            }
+            
+            // Mostrar fantasma en nueva posición
+            lcd_gotoxy(pos, fila);
+            lcd_putc(0);
+            
+            anterior = true;
+        }
+        
+        if(!input(PIN_B7)) {
+            anterior = false;        // Resetear cuando suelta el botón
+        }
+    }
+}

@@ -1,10 +1,10 @@
 [PROJECT]
-Target=C:\Users\isaac\Desktop\pic16f877a\7segx4\4x7.hex
+Target=C:\Users\isaac\Desktop\pic16f877a\menubotones\menubt.hex
 Development_Mode=
 Processor_Text=PIC16F877A
 ToolSuite=CCS
 Processor=0x877A
-[C:\Users\isaac\Desktop\pic16f877a\7segx4\4x7]
+[C:\Users\isaac\Desktop\pic16f877a\menubotones\menubt]
 Type=4
 Path=
 FileList=
@@ -12,14 +12,14 @@ BuildTool=
 OptionString=
 AdditionalOptionString=
 [mru-list]
-1=C:\Users\isaac\Desktop\pic16f877a\7segx4\4x7.c
+1=C:\Users\isaac\Desktop\pic16f877a\menubotones\menubt.c
 [Windows]
 0=0000 %S 0 0 796 451 3 0
 [Units]
 Link=0
 Count=1
-1=C:\Users\isaac\Desktop\pic16f877a\7segx4\4x7
+1=C:\Users\isaac\Desktop\pic16f877a\menubotones\menubt
 [Opened Files]
-1=4x7.c
+1=menubt.c
 2=
 3=

@@ -1,0 +1,82 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004     @WRITE_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+020-029 hexa
+02A-02B main.valor_adc
+02C     main.v
+02D     main.decenas
+02E     main.unidad
+02F     main.i
+030     @DIV88.P1
+030     show.unidad
+030-031 @MUL1616.P1
+030     main.@SCRATCH1
+031     show.decenas
+031     @DIV88.P1
+031     main.@SCRATCH2
+032-033 @DIV1616.P1
+032-033 @MUL1616.P2
+032     @delay_ms1.P3
+032     @DIV88.@SCRATCH1
+032     show.@SCRATCH1
+034-035 @DIV1616.P1
+034     @MUL1616.@SCRATCH1
+036     @DIV1616.@SCRATCH1
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+09C.6   C1OUT
+09C.7   C2OUT
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+0057  @delay_ms1
+0089  main
+0004  @MUL1616
+001B  @DIV1616
+0042  @DIV88
+006C  show
+0089  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    C:\Users\isaac\Desktop\pic16f877a\7segx2\
+
+Project Files:
+    7segx2.c
+    ..\..\..\..\..\Program Files (x86)\PICC\devices\16f877a.h
+
+Units:
+    C:\Users\isaac\Desktop\pic16f877a\7segx2\7segx2 (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      7segx2.err
+    Ext Symbols: 7segx2.esym
+    INHX8:       7segx2.hex
+    Symbols:     7segx2.sym
+    List:        7segx2.lst
+    Debug/COFF:  7segx2.cof
+    Project:     7segx2.PJT
+    Call Tree:   7segx2.tre
+    Statistics:  7segx2.sta

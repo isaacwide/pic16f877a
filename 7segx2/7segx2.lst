@@ -1,0 +1,280 @@
+CCS PCM C Compiler, Version 4.114, 93460303               02-ene.-26 18:03
+
+               Filename: C:\Users\isaac\Desktop\pic16f877a\7segx2\7segx2.lst
+
+               ROM used: 260 words (3%)
+                         Largest free fragment is 2048
+               RAM used: 20 (5%) at main() level
+                         28 (8%) worst case
+               Stack:    2 locations
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   089
+0003:  NOP
+.................... // progrma de un contador de 2 digitos  
+.................... #include<16f877a.h> 
+.................... //////// Standard Header file for the PIC16F877A device //////////////// 
+.................... #device PIC16F877A 
+.................... #list 
+....................  
+.................... #fuses xt,nowdt 
+.................... #use delay(clock=4M) 
+0057:  MOVLW  32
+0058:  MOVWF  04
+0059:  BCF    03.7
+005A:  MOVF   00,W
+005B:  BTFSC  03.2
+005C:  GOTO   06B
+005D:  MOVLW  01
+005E:  MOVWF  78
+005F:  CLRF   77
+0060:  DECFSZ 77,F
+0061:  GOTO   060
+0062:  DECFSZ 78,F
+0063:  GOTO   05F
+0064:  MOVLW  4A
+0065:  MOVWF  77
+0066:  DECFSZ 77,F
+0067:  GOTO   066
+0068:  GOTO   069
+0069:  DECFSZ 00,F
+006A:  GOTO   05D
+006B:  RETURN
+.................... #USE FAST_IO(B) 
+.................... #USE FAST_IO(D) 
+....................  
+.................... void show(int unidad,int decenas); 
+....................  
+....................  
+.................... // vamos a tener que cmabiar los hezas  
+.................... // a b c d e f g dp 
+.................... // 0 1 2 3 4 5 6 7  
+....................  
+.................... int hexa[10] = { 
+....................   0x3F,  // 0 = 0011 1111 = abcdef   (segmentos: a,b,c,d,e,f) 
+....................   0x06,  // 1 = 0000 0110 = bc       (segmentos: b,c) 
+....................   0x5B,  // 2 = 0101 1011 = abdeg    (segmentos: a,b,d,e,g) 
+....................   0x4F,  // 3 = 0100 1111 = abcdg    (segmentos: a,b,c,d,g) 
+....................   0x66,  // 4 = 0110 0110 = bcfg     (segmentos: b,c,f,g) 
+....................   0x6D,  // 5 = 0110 1101 = acdfg    (segmentos: a,c,d,f,g) 
+....................   0x7D,  // 6 = 0111 1101 = acdefg   (segmentos: a,c,d,e,f,g) 
+....................   0x07,  // 7 = 0000 0111 = abc      (segmentos: a,b,c) 
+....................   0x7F,  // 8 = 0111 1111 = abcdefg  (segmentos: todos) 
+....................   0x6F   // 9 = 0110 1111 = abcdfg   (segmentos: a,b,c,d,f,g) 
+.................... }; 
+*
+0094:  MOVLW  3F
+0095:  BCF    03.5
+0096:  MOVWF  20
+0097:  MOVLW  06
+0098:  MOVWF  21
+0099:  MOVLW  5B
+009A:  MOVWF  22
+009B:  MOVLW  4F
+009C:  MOVWF  23
+009D:  MOVLW  66
+009E:  MOVWF  24
+009F:  MOVLW  6D
+00A0:  MOVWF  25
+00A1:  MOVLW  7D
+00A2:  MOVWF  26
+00A3:  MOVLW  07
+00A4:  MOVWF  27
+00A5:  MOVLW  7F
+00A6:  MOVWF  28
+00A7:  MOVLW  6F
+00A8:  MOVWF  29
+....................  
+.................... void main(){ 
+*
+0089:  CLRF   04
+008A:  BCF    03.7
+008B:  MOVLW  1F
+008C:  ANDWF  03,F
+008D:  BSF    03.5
+008E:  BSF    1F.0
+008F:  BSF    1F.1
+0090:  BSF    1F.2
+0091:  BCF    1F.3
+0092:  MOVLW  07
+0093:  MOVWF  1C
+....................     // configuramos el adc 
+....................     int16 valor_adc; 
+....................      
+....................     unsigned int v ; 
+....................      
+....................     //mas configuraciones  
+....................      
+....................     setup_adc_ports(AN0);         
+*
+00A9:  BSF    03.5
+00AA:  BCF    1F.0
+00AB:  BSF    1F.1
+00AC:  BSF    1F.2
+00AD:  BSF    1F.3
+....................     
+....................     setup_adc(ADC_CLOCK_DIV_8);  // Configura el reloj del ADC en este caso como es de 4 mg hrs  
+00AE:  BCF    1F.6
+00AF:  BCF    03.5
+00B0:  BSF    1F.6
+00B1:  BCF    1F.7
+00B2:  BSF    03.5
+00B3:  BCF    1F.7
+00B4:  BCF    03.5
+00B5:  BSF    1F.0
+....................      
+....................     set_adc_channel(0);          // Selecciona el canal 0 (AN0) 
+00B6:  MOVLW  00
+00B7:  MOVWF  78
+00B8:  MOVF   1F,W
+00B9:  ANDLW  C7
+00BA:  IORWF  78,W
+00BB:  MOVWF  1F
+....................      
+....................     delay_us(20); 
+00BC:  MOVLW  06
+00BD:  MOVWF  77
+00BE:  DECFSZ 77,F
+00BF:  GOTO   0BE
+00C0:  NOP
+....................      
+....................     set_tris_d(0b00000000); // todos seran salidas por la multiplexion 
+00C1:  MOVLW  00
+00C2:  BSF    03.5
+00C3:  MOVWF  08
+....................     set_tris_b(0x00); // b como salidas   
+00C4:  MOVWF  06
+....................     output_b(0x00); 
+00C5:  BCF    03.5
+00C6:  CLRF   06
+....................      
+....................     int decenas = 0; 
+....................     int unidad = 0; 
+....................     int i ; 
+00C7:  CLRF   2D
+00C8:  CLRF   2E
+....................      
+....................     while(true){ 
+....................          
+....................        valor_adc= read_adc(); 
+00C9:  BSF    1F.2
+00CA:  BTFSC  1F.2
+00CB:  GOTO   0CA
+00CC:  MOVF   1E,W
+00CD:  CLRF   2B
+00CE:  MOVWF  2A
+....................        v = (valor_adc * 99)/1023 ;  
+00CF:  MOVF   2B,W
+00D0:  MOVWF  31
+00D1:  MOVF   2A,W
+00D2:  MOVWF  30
+00D3:  CLRF   33
+00D4:  MOVLW  63
+00D5:  MOVWF  32
+00D6:  GOTO   004
+00D7:  MOVF   79,W
+00D8:  MOVWF  31
+00D9:  MOVF   78,W
+00DA:  MOVWF  30
+00DB:  MOVF   79,W
+00DC:  MOVWF  33
+00DD:  MOVF   78,W
+00DE:  MOVWF  32
+00DF:  MOVLW  03
+00E0:  MOVWF  35
+00E1:  MOVLW  FF
+00E2:  MOVWF  34
+00E3:  GOTO   01B
+00E4:  MOVF   78,W
+00E5:  MOVWF  2C
+....................         
+....................        decenas = v / 10;             
+00E6:  MOVF   2C,W
+00E7:  MOVWF  30
+00E8:  MOVLW  0A
+00E9:  MOVWF  31
+00EA:  CALL   042
+00EB:  MOVF   78,W
+00EC:  MOVWF  2D
+....................        unidad = v % 10; 
+00ED:  MOVF   2C,W
+00EE:  MOVWF  30
+00EF:  MOVLW  0A
+00F0:  MOVWF  31
+00F1:  CALL   042
+00F2:  MOVF   77,W
+00F3:  MOVWF  2E
+....................        
+....................        for(i = 0 ; i<100 ; i++ ){ 
+00F4:  CLRF   2F
+00F5:  MOVF   2F,W
+00F6:  SUBLW  63
+00F7:  BTFSS  03.0
+00F8:  GOTO   100
+....................          show(unidad,decenas); 
+00F9:  MOVF   2E,W
+00FA:  MOVWF  30
+00FB:  MOVF   2D,W
+00FC:  MOVWF  31
+00FD:  GOTO   06C
+....................              
+....................        } 
+00FE:  INCF   2F,F
+00FF:  GOTO   0F5
+....................          
+....................         decenas = 0; 
+0100:  CLRF   2D
+....................         unidad = 0; 
+0101:  CLRF   2E
+....................     } 
+0102:  GOTO   0C9
+.................... } 
+....................  
+.................... void show(int unidad, int decenas){ 
+....................     
+0103:  SLEEP
+....................     output_d(0b00000000);          // Apagar todo 
+*
+006C:  CLRF   08
+....................     output_b(hexa[decenas]);        
+006D:  MOVLW  20
+006E:  ADDWF  31,W
+006F:  MOVWF  04
+0070:  BCF    03.7
+0071:  MOVF   00,W
+0072:  MOVWF  32
+0073:  MOVWF  06
+....................     output_d(0b10000000);           
+0074:  MOVLW  80
+0075:  MOVWF  08
+....................     delay_ms(1); 
+0076:  MOVLW  01
+0077:  MOVWF  32
+0078:  CALL   057
+....................      
+....................     output_d(0b00000000);          // Apagar todo primero 
+0079:  CLRF   08
+....................     output_b(hexa[unidad]);         
+007A:  MOVLW  20
+007B:  ADDWF  30,W
+007C:  MOVWF  04
+007D:  BCF    03.7
+007E:  MOVF   00,W
+007F:  MOVWF  32
+0080:  MOVWF  06
+....................     output_d(0b01000000);           
+0081:  MOVLW  40
+0082:  MOVWF  08
+....................     delay_ms(1); 
+0083:  MOVLW  01
+0084:  MOVWF  32
+0085:  CALL   057
+.................... } 
+0086:  BCF    0A.3
+0087:  BCF    0A.4
+0088:  GOTO   0FE (RETURN)
+
+Configuration Fuses:
+   Word  1: 3F71   XT NOWDT PUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT
